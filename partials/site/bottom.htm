@@ -69,7 +69,7 @@
 			    }
 			    if(accept.length > 0 && accept.checked == false){
 			      _break = true;
-			      alert("{{"Підтвердіть згоду на обробку персональних даних."|_}}");
+			      alert("Підтвердіть згоду на обробку персональних даних.");
 			      this.disabled = false;
 			    }
 			    if(_break == false) {
@@ -100,7 +100,7 @@
 				      if( response != 'false'){
 			            window.location.replace("thanks.php?type="+response);
 			          }else{
-			            alert("{{"Трапилась помилка. Звяжіться з менеджером для отримання інофрмації!"|_}}");
+			            alert("Трапилась помилка. Звяжіться з менеджером для отримання інофрмації!");
 			            console.log(response);
 			            document.getElementsByClassName('sendForm').disabled = false;
 			          }
