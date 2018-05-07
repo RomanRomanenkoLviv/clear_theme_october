@@ -1,0 +1,26 @@
+//
+// Fonts file
+//
+// Allocated area for font definitions used by this application
+//
+
+//@font-face {
+//    font-family: 'lato';
+//    src: url('../fonts/lato-light-webfont.eot');
+//    src: url('../fonts/lato-light-webfont.eot?#iefix') format('embedded-opentype'),
+//         url('../fonts/lato-light-webfont.svg#latolight') format('svg'),
+//         url('../fonts/lato-light-webfont.woff') format('woff'),
+//         url('../fonts/lato-light-webfont.ttf') format('truetype');
+//    font-weight: 300;
+//    font-style: normal;
+//}
+
+//
+// Chrome exhibits strange behavior when custom fonts are used
+// on select inputs. This fixes the garbled text.
+//
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select {
+        font-family: sans-serif;
+    }
+}

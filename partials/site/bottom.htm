@@ -1,0 +1,125 @@
+==
+<!-- Rsponsive JS -->
+<script type="text/javascript">
+	function responsiveJS(){
+		var width=document.documentElement.clientWidth,
+			etalonFontSize=0,
+			is_chrome=navigator.userAgent.indexOf('Chrome')>-1,
+			is_safari=navigator.userAgent.indexOf("Safari")>-1,
+			wrapClass = document.getElementById("wrap").className;
+		if((is_chrome)&&(is_safari)){
+			is_safari=false;
+		}
+		wrapClass = wrapClass.replace(/ lg/g,"").replace(/ md/g,"").replace(/ sm/g,"");
+		document.getElementById("wrap").className = wrapClass;
+		var defWidWrp = 1230,
+			defMBigScr = defWidWrp > 0 ? defWidWrp : 1920,
+			defMedScr = 800,
+			defSmScr = 599;
+			
+		if( width < defWidWrp || defWidWrp == 0){
+			if(width>defMedScr){
+				if(is_safari==true && width<=defMBigScr){
+					var l=((defMBigScr>-width)/140|0)*0.02;
+					etalonFontSize=(10/defMBigScr)*(width*(0.98-l));
+				}else{
+					etalonFontSize=(10/defMBigScr)*width;
+				}
+				document.getElementById("body").style.fontSize=etalonFontSize+'px';
+				document.getElementById("wrap").className += ' lg';
+			}else{
+				if(width>defSmScr){
+					etalonFontSize=(10/defMedScr)*width;
+					document.getElementById("wrap").className += ' md';
+				}else{
+					etalonFontSize=(10/defSmScr)*width;
+					document.getElementById("wrap").className += ' sm';
+				}
+				document.getElementById("body").style.fontSize=etalonFontSize+'px';
+			}
+		}else{
+			document.getElementById("body").style.fontSize='10px';
+			document.getElementById("wrap").className += ' lg';
+		}
+	}
+	responsiveJS();
+	window.onresize = function(){responsiveJS();}
+</script>
+
+<script type="text/javascript">
+	var forms = document.getElementsByClassName("form"); 
+	for (var i=0; i < forms.length; i++) {
+		var button = forms[i].querySelector('.sendForm'),
+			form = forms[i];
+    	button.onclick = function(){
+	        if(this.disabled != true){
+			    this.disabled = true;
+			    var inputs = form.querySelectorAll("input:not([type='checkbox']):not([type='radio']):not([type='file'])"),
+				    _break = false,
+			        accept = form.querySelectorAll("input[name='accept']");
+			    for (var i = 0; i < inputs.length; i++) {
+			        if( ( inputs[i].required==true && inputs[i].value.length < 1 ) || inputs[i].value=="+7(9__)___-__-__" || inputs[i].value.substr(-1)=='_' || (inputs[i].name == 'email' && (inputs[i].value.indexOf('@') + 1) < 1) ){
+			          _break = true;
+			        }
+			    }
+
+			    if(_break == true) {
+			      alert("{{"Заповніть коректно усі поля!"|_}}");
+			      this.disabled = false;
+			    }
+			    if(accept.length > 0 && accept.checked == false){
+			      _break = true;
+			      alert("{{"Підтвердіть згоду на обробку персональних даних."|_}}");
+			      this.disabled = false;
+			    }
+			    if(_break == false) {
+			      var elements = form.querySelectorAll("input:not([type=file]):not([type=button])"),
+			          textareas = form.querySelectorAll("textarea"),
+			          request = '';
+			      if(textareas != null){
+				      if(textareas.length > 0){
+				        for (var i = 0; i < textareas.length; i++) {
+				          request += '"' + textareas[i].name + '" : "' + textareas[i].value + '", ';
+				        }
+				      }
+				   }
+			      for (var i = 0; i < elements.length; i++) {
+			          if(elements[i].type == 'checkbox' || elements[i].type == 'radio'){
+			            if(elements[i].checked == true){
+			              request += '"' + elements[i].name + '" : "' + encodeURIComponent( elements[i].value ) + '", ';
+			            }
+			          }else{
+			            request += '"' + elements[i].name + '" : "' + encodeURIComponent( elements[i].value ) + '", ';
+			          }
+			      }
+			      request = '{'+request.substr(0, request.length-2)+'}';
+				  var xhttp = new XMLHttpRequest();
+				  xhttp.onreadystatechange = function() {
+				    if (this.readyState == 4 && this.status == 200) {
+				      var response = this.responseText;
+				      if( response != 'false'){
+			            window.location.replace("thanks.php?type="+response);
+			          }else{
+			            alert("{{"Трапилась помилка. Звяжіться з менеджером для отримання інофрмації!"|_}}");
+			            console.log(response);
+			            document.getElementsByClassName('sendForm').disabled = false;
+			          }
+				    }
+				  };
+				  xhttp.open("GET", 'ajax?type=sendForm&request='+request, true);
+				  xhttp.send();
+				}
+			}
+	    }
+	}
+</script>
+
+<!-- Styles -->
+<link href="{{ ['assets/less/vendor.less',
+                'assets/less/style.less',
+				'assets/less/responsive.less']|theme }}" rel="stylesheet">
+
+<!-- Scripts -->
+<script src="{{ ['assets/libs/jquery/jquery-1.11.2.min.js',
+				'assets/libs/jquery.maskedinputrus.min.js',
+				'assets/javascript/app.js']|theme }}"></script>

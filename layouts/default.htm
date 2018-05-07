@@ -1,0 +1,23 @@
+description = "Основний шаблон"
+==
+<!DOCTYPE html>
+<head>
+    {% partial 'site/head' %}
+</head>
+    <body class="{{ this.page.id }}">
+        <div class="wrap" id="wrap">
+            {% partial 'site/header' %}
+    
+            <!-- Content -->
+            {% page %}
+            
+            {% partial 'site/footer' %}
+            
+            {% partial 'site/modals' %}
+            {% partial 'site/bottom' %}
+            
+            {% framework extras %}
+            {% scripts %}
+        </div>
+    </body>
+</html>
